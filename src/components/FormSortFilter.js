@@ -23,7 +23,8 @@ const FormSortFilter = ({sortToggle, sortSelection, handleSortToggle, handleSort
             <section>
                 <div className='form-group'>
                     <label>Filter Factories:</label>
-                    <input className='form-input' placeholder='Type to filter factories by name' onChange={handleFilterInput}></input>
+                    <input className='form-input search' placeholder='Type to filter factories by name' onChange={handleFilterInput}></input>
+                    <button className='input-btn right'><Icon icon='search' style={{width: 16}} /></button>
                 </div>
                 <div className='form-group'>
                     <label>Sort Factories By:</label>

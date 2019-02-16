@@ -121,6 +121,27 @@ label{
   border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+.form-input.search{
+  display: inline-block;
+  width: calc(100% - 42px);
+  vertical-align: middle;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+.input-btn{
+  display: inline-block;
+  height: calc(2.25rem + 2px);
+  padding: .375rem .75rem;
+  vertical-align: middle;
+  background: #ddd;
+  border: 1px solid #bbb;
+  outline: none;
+}
+.input-btn.right{
+  border-top-right-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+}
 select.form-input{
   cursor: pointer;
 }
