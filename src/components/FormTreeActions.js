@@ -77,6 +77,7 @@ class FormTreeActions extends Component{
         }
     }
     render(){
+        const {sortToggle, sortSelection, handleSortToggle, handleSortSelection, handleFilterInput, handleFilterClear} = this.props;
         return(
             <Fragment>
                 <h5>CREATE A NEW FACTORY</h5>
@@ -129,10 +130,12 @@ class FormTreeActions extends Component{
                     </form>
                 </section>
                 <FormSortFilter 
-                    sortToggle={this.props.sortToggle}
-                    sortSelection={this.props.sortSelection}
-                    handleSortToggle={this.props.handleSortToggle}
-                    handleSortSelection={this.props.handleSortSelection}
+                    sortToggle={sortToggle}
+                    sortSelection={sortSelection}
+                    handleSortToggle={handleSortToggle}
+                    handleSortSelection={handleSortSelection}
+                    handleFilterInput={handleFilterInput}
+                    handleFilterClear={handleFilterClear}
                 />
             </Fragment>
         )

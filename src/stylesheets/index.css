@@ -225,6 +225,8 @@ select.form-input{
   margin: 10px 10px 0 10px;
   transform: scale3d(1,1,1);
   animation-delay: 0s;
+  fill: currentColor;
+  color: #bbb;
 }
 .loading-container > div:nth-child(2){
   animation-delay: .3s;
@@ -375,7 +377,6 @@ select.form-input{
   cursor: pointer;
   color: #fff;
   background-color: rgba(0,0,0,0);
-  transition: background-color .3s;
   fill: currentColor;
 }
 .checkbox:hover{

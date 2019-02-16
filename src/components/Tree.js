@@ -30,9 +30,13 @@ class TreeRoot extends Component{
         return <LoadingTrees />
     }
     renderFactories = () =>{
-        const {selectedFactory} = this.props;
+        var {selectedFactory, factories, filterInput} = this.props;
+        if(filterInput){
+            const re = new RegExp(filterInput, "gi");
+            factories = factories.filter(factory => re.test(factory.name));
+        }
         return(
-            this.props.factories.map( factory =>{
+            factories.map( factory =>{
                 return <Factory 
                             key={factory._id}
                             factory={factory}

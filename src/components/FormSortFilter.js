@@ -16,14 +16,14 @@ const renderSelection = (selection) => {
     }
 }
 
-const FormSortFilter = ({sortToggle, sortSelection, handleSortToggle, handleSortSelection}) => {
+const FormSortFilter = ({sortToggle, sortSelection, handleSortToggle, handleSortSelection, handleFilterInput, handleFilterClear}) => {
     return(
         <Fragment>
             <h5>FILTER AND SORT FACTORIES</h5>
             <section>
                 <div className='form-group'>
                     <label>Filter Factories:</label>
-                    <input className='form-input' placeholder='Type to filter factories by name'></input>
+                    <input className='form-input' placeholder='Type to filter factories by name' onChange={handleFilterInput}></input>
                 </div>
                 <div className='form-group'>
                     <label>Sort Factories By:</label>

@@ -11,7 +11,7 @@ class App extends Component {
   state = {
     selectedFactory: null,
     sortSelection: 'timeDown',
-    filterValue: '',
+    filterInput: '',
     sortToggle: false,
     editName: '',
     editLowerBound: '',
@@ -61,7 +61,14 @@ class App extends Component {
       }
       return factory;
     });
-    this.setState({factories, selectedFactory: updatedFactory, name, lowerBound, upperBound, numChildren});
+    this.setState({
+      factories: handleFactorySort(factories, this.state.sortSelection), 
+      selectedFactory: updatedFactory, 
+      name, 
+      lowerBound, 
+      upperBound, 
+      numChildren
+    });
   }
   handleFactorySelection = selectedFactory => {
     const {name, lowerBound, upperBound, numChildren} = selectedFactory;
@@ -71,7 +78,8 @@ class App extends Component {
       //Since 0 is a 'falsey' value, first check if it's 0 and then set to an empty string if it's not a legit value
       editLowerBound: lowerBound === 0 ? 0 : lowerBound || '', 
       editUpperBound: upperBound === 0 ? 0 : upperBound || '',  
-      editNumChildren: numChildren || ''
+      editNumChildren: numChildren || '',
+      formErrors: {lowerBound: null, upperBound: null, numChildren: null}
     });
   }
   handleInputChange = event => {
@@ -129,6 +137,14 @@ class App extends Component {
       factories: handleFactorySort(this.state.factories, sortSelection)
     });
   }
+  handleFilterInput = (event) => {
+    this.setState({
+      filterInput: event.target.value
+    });
+  }
+  handleFilterClear = () => {
+    this.setState({filterInput: ''});
+  }
   render() {
     return (
         <div className={`main-container${this.state.selectedFactory ? ' editing' : ''}`}>
@@ -137,12 +153,15 @@ class App extends Component {
             sortSelection={this.state.sortSelection}
             handleSortToggle={this.handleSortToggle}
             handleSortSelection={this.handleSortSelection}
+            handleFilterInput={this.handleFilterInput}
+            handleFilterClear={this.handleFilterClear}
           />
           <Tree 
             handleFactorySelection={this.handleFactorySelection} 
             factories={this.state.factories}
             selectedFactory={this.state.selectedFactory}
-            dataLoadingError={this.state.dataLoadingError} 
+            dataLoadingError={this.state.dataLoadingError}
+            filterInput={this.state.filterInput}
           />
           <EditFactory 
               selectedFactory={this.state.selectedFactory}

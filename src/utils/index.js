@@ -93,4 +93,3 @@ export const checkForChildrenErrors = (values) => {
     errorObj.numChildren = requiredField(numChildren);
     return errorObj;
 }
-
