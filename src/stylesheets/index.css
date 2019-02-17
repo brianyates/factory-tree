@@ -24,13 +24,13 @@ label{
 }
 .main-container .tree {
   width: 68%;
-  transition: width .3s;
+  transition: width .15s ease-in-out;
   z-index: 1;
 }
 .main-container .tree-actions {
   box-shadow: 1px 0 7px rgba(0,0,0,.5);
   width: 32%;
-  transition: width .3s;
+  transition: width .15s ease-in-out;
   z-index: 3;
   background: #f9f9f9;
 }

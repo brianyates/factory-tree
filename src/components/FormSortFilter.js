@@ -29,7 +29,7 @@ class FormSortFilter extends Component{
                         <label>Sort Factories By:</label>
                         <select value={sortSelection} className='form-input' onChange={handleSortSelection}>
                             <option value='timeDown'>Create Date (Descending)</option>
-                            <option value='timeUp'>Create Date (Descending)</option>
+                            <option value='timeUp'>Create Date (Ascending)</option>
                             <option value='alphaDown'>Factory Name (Descending)</option>
                             <option value='alphaUp'>Factory Name (Ascending)</option>
                         </select>
