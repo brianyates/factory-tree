@@ -184,8 +184,8 @@ class App extends Component {
               editNumChildren={this.state.editNumChildren}
               formErrors={this.state.formErrors}
             />
-            <div className='edit-overlay'></div>
-            <div className='tree-actions-overlay'></div>
+            <div className='edit-overlay' onClick={() => this.handleCancel()}></div>
+            <div className='tree-actions-overlay' onClick={() => this.closeTreeActions()}></div>
         </div>
     );
   }
