@@ -24,7 +24,8 @@ class App extends Component {
       lowerBound: null,
       upperBound: null,
       numChildren: null
-    }
+    },
+    showTreeActions: false
   }
   componentDidMount(){
     axios.get('/api/all-factories')
@@ -47,7 +48,7 @@ class App extends Component {
   factoryAdded = factory => {
       var factories = [...this.state.factories];
       factories.push(factory);
-      this.setState({factories: handleFactorySort(factories, this.state.sortSelection)});
+      this.setState({factories: handleFactorySort(factories, this.state.sortSelection), showTreeActions: false});
   }
   factoryRemoved = id => {
       var factories = [...this.state.factories].filter( factory => factory._id !== id);
@@ -78,7 +79,7 @@ class App extends Component {
       //Since 0 is a 'falsey' value, first check if it's 0 and then set to an empty string if it's not a legit value
       editLowerBound: lowerBound === 0 ? 0 : lowerBound || '', 
       editUpperBound: upperBound === 0 ? 0 : upperBound || '',  
-      editNumChildren: numChildren || '',
+      editNumChildren: numChildren === 0 ? 0 : numChildren || '', 
       formErrors: {lowerBound: null, upperBound: null, numChildren: null}
     });
   }
@@ -145,9 +146,15 @@ class App extends Component {
   handleFilterClear = () => {
     this.setState({filterInput: ''});
   }
+  closeTreeActions = () => {
+    this.setState({showTreeActions: false})
+  }
+  openTreeActions = () => {
+    this.setState({showTreeActions: true})
+  }
   render() {
     return (
-        <div className={`main-container${this.state.selectedFactory ? ' editing' : ''}`}>
+        <div className={`main-container${this.state.selectedFactory ? ' editing' : ''}${this.state.showTreeActions ? ' show-tree-actions' : ''}`}>
           <TreeActions 
             sortToggle={this.state.sortToggle}
             sortSelection={this.state.sortSelection}
@@ -156,6 +163,7 @@ class App extends Component {
             filterInput={this.state.filterInput}
             handleFilterInput={this.handleFilterInput}
             handleFilterClear={this.handleFilterClear}
+            closeTreeActions={this.closeTreeActions}
           />
           <Tree 
             handleFactorySelection={this.handleFactorySelection} 
@@ -163,6 +171,7 @@ class App extends Component {
             selectedFactory={this.state.selectedFactory}
             dataLoadingError={this.state.dataLoadingError}
             filterInput={this.state.filterInput}
+            openTreeActions={this.openTreeActions}
           />
           <EditFactory 
               selectedFactory={this.state.selectedFactory}
@@ -175,6 +184,8 @@ class App extends Component {
               editNumChildren={this.state.editNumChildren}
               formErrors={this.state.formErrors}
             />
+            <div className='edit-overlay'></div>
+            <div className='tree-actions-overlay'></div>
         </div>
     );
   }

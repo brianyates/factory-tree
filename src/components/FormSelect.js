@@ -2,8 +2,8 @@ import React from 'react';
 
 const CHILD_LIMIT = 15;
 const renderOptions = () => {
-    var arr = [<option value='' disabled key='opt-0'>Select an option</option>];
-    for(let i = 1; i <= CHILD_LIMIT; i++){
+    var arr = [<option value='' disabled key='opt-init'>Select an option</option>];
+    for(let i = 0; i <= CHILD_LIMIT; i++){
         arr.push(<option key={`opt-${i}`} value={i}>{i}</option>);
     }
     return arr;

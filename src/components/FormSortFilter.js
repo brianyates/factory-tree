@@ -15,7 +15,7 @@ class FormSortFilter extends Component{
                         <label>Filter Factories:</label>
                         <input 
                             className='form-input search' 
-                            placeholder='Type to filter factories by name' 
+                            placeholder='Type to filter by name' 
                             onChange={handleFilterInput}
                             value={filterInput}
                             onFocus={() => this.setState({focused: true})}

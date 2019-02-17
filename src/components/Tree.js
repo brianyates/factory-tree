@@ -50,7 +50,12 @@ class TreeRoot extends Component{
         return(
             <div className='main-col tree'>
                 <div className={`column-container tree-container${this.state.open ? ' open' : ''}`}>
-                    <header className='h-2'>TREE</header>
+                    <header className='h-2'>
+                        <button className='menu-btn' title='Open Tree Actions' onClick={() => this.props.openTreeActions()}>
+                            <span/><span/><span/>
+                        </button>
+                        <span>TREE</span>
+                    </header>
                     {this.renderContent()}
                 </div>
             </div>

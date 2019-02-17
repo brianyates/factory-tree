@@ -13,7 +13,7 @@ class Factory extends Component{
     }
     renderChildrenContent = () => {
         const {_id, lowerBound, upperBound, numChildren, children} = this.props.factory;
-        if(children){
+        if(children && children.length > 0){
             return (
                 <Fragment>
                     <div className='children-info'>
@@ -39,7 +39,7 @@ class Factory extends Component{
                 <div className='factory-header'>
                     <div className='header-info' onClick={() => this.handleHeaderClick()}>
                         <span className='angle'><Icon icon='angle' /></span>
-                        <span>{this.props.factory.name}</span>
+                        <span className='factory-name'>{this.props.factory.name}</span>
                     </div>
                     <button onClick={() => this.handleEditClick()} className='edit-btn'><Icon icon='pencil' style={{width: 20}} /></button>
                 </div>
