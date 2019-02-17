@@ -5,6 +5,7 @@ const FormInput = ({label, type, name, placeholder, value, handleInputChange, er
         <div className='form-group'>
             <label>{label}</label>
             <input 
+                min={type==='number' ? '0': ''}
                 type={type} 
                 name={name}
                 className={`form-input${error ? ' input-error' : ''}`} 

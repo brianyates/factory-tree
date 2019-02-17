@@ -1,5 +1,5 @@
 const requiredField = input => {
-    if(!input){
+    if(!input && (input !== 0)){
         return 'This is a required field';
     }
     return null;
@@ -11,8 +11,8 @@ const positiveInteger = input => {
     return 'Please enter a positive integer';
 }
 const greaterThanLowerBound = (lowerBound, upperBound) => {
-    if(parseInt(lowerBound) >= parseInt(upperBound)){
-        return 'Upper bound must be greater than lower bound';
+    if(parseInt(lowerBound) > parseInt(upperBound)){
+        return 'Upper bound must be greater than or equal to lower bound';
     }
     return null;
 }

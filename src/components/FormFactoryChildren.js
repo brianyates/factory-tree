@@ -9,6 +9,7 @@ const FormFactoryChildren = ({handleSubmit, handleInputChange, editLowerBound, e
             <section>               
                 <form onSubmit={event => handleSubmit('children', event)}>
                     <FormInput 
+                        type='number'
                         label='Lower Bound:' 
                         placeholder='Enter a positive integer' 
                         name='editLowerBound' 
@@ -17,6 +18,7 @@ const FormFactoryChildren = ({handleSubmit, handleInputChange, editLowerBound, e
                         error={formErrors.lowerBound}
                     />
                     <FormInput 
+                        type='number'
                         label='Upper Bound:' 
                         placeholder='Enter a positive integer' 
                         name='editUpperBound' 

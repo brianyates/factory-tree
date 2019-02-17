@@ -43,7 +43,15 @@ class FormTreeActions extends Component{
         return {name, generateChildren, lowerBound, upperBound, numChildren};
     }
     resetFormValues = () => {
-        this.setState({name: '', lowerBound: '', upperBound: '', numChildren: '', generateChildren: false, submitting: false});
+        this.setState({
+            name: '', 
+            lowerBound: '', 
+            upperBound: '', 
+            numChildren: '', 
+            generateChildren: false, 
+            submitting: false, 
+            hasFormError: false
+        });
     }
     handleSubmit = event => {
         event.preventDefault();
@@ -77,7 +85,7 @@ class FormTreeActions extends Component{
         }
     }
     render(){
-        const {sortToggle, sortSelection, handleSortToggle, handleSortSelection, handleFilterInput, handleFilterClear} = this.props;
+        const {sortToggle, sortSelection, handleSortToggle, handleSortSelection, filterInput, handleFilterInput, handleFilterClear} = this.props;
         return(
             <Fragment>
                 <h5>CREATE A NEW FACTORY</h5>
@@ -100,7 +108,7 @@ class FormTreeActions extends Component{
                         </div>
                         <div style={{borderTop: '1px solid #ddd', display: this.state.generateChildren ? 'block' : 'none'}}>
                             <FormInput
-                                type='tel'
+                                type='number'
                                 name='lowerBound'
                                 label='Lower Bound:'
                                 placeholder='Enter a positive integer'
@@ -109,7 +117,7 @@ class FormTreeActions extends Component{
                                 error={this.state.formErrors.lowerBound}
                             />
                             <FormInput
-                                type='tel'
+                                type='number'
                                 name='upperBound'
                                 label='Upper Bound:'
                                 placeholder='Enter a positive integer'
@@ -134,6 +142,7 @@ class FormTreeActions extends Component{
                     sortSelection={sortSelection}
                     handleSortToggle={handleSortToggle}
                     handleSortSelection={handleSortSelection}
+                    filterInput={filterInput}
                     handleFilterInput={handleFilterInput}
                     handleFilterClear={handleFilterClear}
                 />

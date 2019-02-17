@@ -130,11 +130,11 @@ class App extends Component {
   handleSortToggle = () => {
     this.setState({sortToggle: !this.state.sortToggle})
   }
-  handleSortSelection = (sortSelection) => {
+  handleSortSelection = ({target: {value}}) => {
     this.setState({
       sortToggle: false, 
-      sortSelection, 
-      factories: handleFactorySort(this.state.factories, sortSelection)
+      sortSelection: value, 
+      factories: handleFactorySort(this.state.factories, value)
     });
   }
   handleFilterInput = (event) => {
@@ -153,6 +153,7 @@ class App extends Component {
             sortSelection={this.state.sortSelection}
             handleSortToggle={this.handleSortToggle}
             handleSortSelection={this.handleSortSelection}
+            filterInput={this.state.filterInput}
             handleFilterInput={this.handleFilterInput}
             handleFilterClear={this.handleFilterClear}
           />
