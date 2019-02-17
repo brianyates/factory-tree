@@ -3,7 +3,7 @@ import Icon from './Icon';
 
 class Factory extends Component{
     state = {
-        open: false
+        open: true
     }
     handleEditClick = () => {
         this.props.handleFactorySelection(this.props.factory);

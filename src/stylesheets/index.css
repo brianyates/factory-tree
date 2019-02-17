@@ -48,7 +48,7 @@ label{
 }
 .menu-btn, .close-tree-actions-btn{
   position: absolute;
-  left: 20px;
+  left: 10px;
   cursor: pointer;
   background: rgba(0,0,0,0);
   border: none;
@@ -68,7 +68,6 @@ label{
   margin-bottom: 4px;
 }
 .close-tree-actions-btn {
-  left: 10px;
   display: flex;
 }
 .menu-btn > span:last-child{
