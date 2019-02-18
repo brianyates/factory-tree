@@ -36,12 +36,14 @@ class TreeRoot extends Component{
             factories = factories.filter(factory => re.test(factory.name));
         }
         return(
-            factories.map( factory =>{
+            factories.map( (factory, index) =>{
                 return <Factory 
                             key={factory._id}
                             factory={factory}
+                            index={index}
                             selected={selectedFactory && selectedFactory._id === factory._id} 
-                            handleFactorySelection={this.props.handleFactorySelection} 
+                            handleFactorySelection={this.props.handleFactorySelection}
+                            handleFactoryToggle={this.props.handleFactoryToggle}
                         />
             })
         )

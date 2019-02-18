@@ -6,10 +6,10 @@ class FormSortFilter extends Component{
         focused: false
     }
     render(){
-        const {sortSelection, handleSortSelection, filterInput, handleFilterInput, handleFilterClear} = this.props;
+        const {sortSelection, handleSortSelection, filterInput, handleFilterInput, handleFilterClear, toggleAllFactories} = this.props;
         return(
             <Fragment>
-                <h5>FILTER AND SORT FACTORIES</h5>
+                <h5>ADDITIONAL OPTIONS</h5>
                 <section>
                     <div className='form-group'>
                         <label>Filter Factories:</label>
@@ -33,6 +33,10 @@ class FormSortFilter extends Component{
                             <option value='alphaDown'>Factory Name (Descending)</option>
                             <option value='alphaUp'>Factory Name (Ascending)</option>
                         </select>
+                    </div>
+                    <div className='toggle-btns'>
+                        <button onClick={() => toggleAllFactories(true)}>[+] Expand All</button>
+                        <button onClick={() => toggleAllFactories(false)}>[-] Collapse All</button>
                     </div>
                 </section>
             </Fragment>

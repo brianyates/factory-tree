@@ -57,6 +57,7 @@ module.exports = (app, io) => {
     //Edit a factory's properties
     app.put('/api/update-factory/:id/:type',  async (req, res) => {
         const {id, type} = req.params;
+        //If the user is only editing the name, do not update the children properties (and vice versa)
         if(type==='name'){
             try{
                 const {name} = req.body;

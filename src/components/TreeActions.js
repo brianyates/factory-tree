@@ -2,7 +2,7 @@ import React from 'react';
 import FormTreeActions from './FormTreeActions';
 import Icon from './Icon';
 
-const TreeActions = ({sortToggle, sortSelection, handleSortToggle, handleSortSelection, filterInput, handleFilterInput, handleFilterClear, closeTreeActions}) =>{
+const TreeActions = ({sortSelection, handleSortSelection, filterInput, handleFilterInput, handleFilterClear, closeTreeActions, toggleAllFactories}) =>{
     return(
         <div className='main-col tree-actions'>
             <div className='column-container'>
@@ -13,13 +13,12 @@ const TreeActions = ({sortToggle, sortSelection, handleSortToggle, handleSortSel
                     <span>TREE ACTIONS</span>
                 </header>
                 <FormTreeActions 
-                    sortToggle={sortToggle}
                     sortSelection={sortSelection}
-                    handleSortToggle={handleSortToggle}
                     handleSortSelection={handleSortSelection}
                     filterInput={filterInput}
                     handleFilterInput={handleFilterInput}
                     handleFilterClear={handleFilterClear}
+                    toggleAllFactories={toggleAllFactories}
                 />
             </div>
         </div>

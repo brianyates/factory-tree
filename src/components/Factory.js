@@ -1,18 +1,9 @@
-import React, {Component, Fragment} from 'react';
+import React, {Fragment} from 'react';
 import Icon from './Icon';
 
-class Factory extends Component{
-    state = {
-        open: true
-    }
-    handleEditClick = () => {
-        this.props.handleFactorySelection(this.props.factory);
-    }
-    handleHeaderClick = () => {
-        this.setState({open: !this.state.open});
-    }
-    renderChildrenContent = () => {
-        const {_id, lowerBound, upperBound, numChildren, children} = this.props.factory;
+const Factory = ({factory, selected, index, handleFactorySelection, handleFactoryToggle}) =>{
+    const {_id, name, lowerBound, upperBound, numChildren, children, open} = factory;
+    const renderChildrenContent = () => {
         if(children && children.length > 0){
             return (
                 <Fragment>
@@ -33,20 +24,20 @@ class Factory extends Component{
             <div className='no-content'>No children to show</div>
         )
     }
-    render(){
-        return(
-            <div className={`factory-container${this.state.open ? ' open': ''}${this.props.selected ? ' selected': ''}`}>
-                <div className='factory-header'>
-                    <div className='header-info' onClick={() => this.handleHeaderClick()}>
-                        <span className='angle'><Icon icon='angle' /></span>
-                        <span className='factory-name'>{this.props.factory.name}</span>
-                    </div>
-                    <button onClick={() => this.handleEditClick()} className='edit-btn'><Icon icon='pencil' style={{width: 20}} /></button>
+    return(
+        <div className={`factory-container${open ? ' open': ''}${selected ? ' selected': ''}`}>
+            <div className='factory-header'>
+                <div className='header-info' onClick={() => handleFactoryToggle(index)}>
+                    <span className='angle'><Icon icon='angle' /></span>
+                    <span className='factory-name'>{name}</span>
                 </div>
-                <div className='factory-children-container'>{this.renderChildrenContent()}</div>
+                <button onClick={() => handleFactorySelection(factory)} className='edit-btn'>
+                    <Icon icon='pencil' style={{width: 20}} />
+                </button>
             </div>
-        )
-    }
+            <div className='factory-children-container'>{renderChildrenContent()}</div>
+        </div>
+    )
 }
 
 export default Factory;

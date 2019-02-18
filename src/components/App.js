@@ -9,15 +9,14 @@ import {checkForChildrenErrors, handleFactorySort} from '../utils';
 
 class App extends Component {
   state = {
+    factories: null,
     selectedFactory: null,
     sortSelection: 'timeDown',
     filterInput: '',
-    sortToggle: false,
     editName: '',
     editLowerBound: '',
     editUpperBound: '',
     editNumChildren: '',
-    factories: null,
     dataLoadingError: false,
     hasFormError: false,
     formErrors: {
@@ -31,7 +30,13 @@ class App extends Component {
     axios.get('/api/all-factories')
     .then( ({data, status}) => {
         if(status === 200){
-            this.setState({factories: data});
+            this.setState({
+              factories: data.map(factory => {
+                //Set all factories to be expanded (not collapsed in the tree view)
+                factory.open = true;
+                return factory;
+              })
+            });
         }
         else{
             this.setState({dataLoadingError: true});
@@ -44,6 +49,18 @@ class App extends Component {
     socket.on("factoryAdded", data => this.factoryAdded(data));
     socket.on("factoryRemoved", data => this.factoryRemoved(data));
     socket.on("factoryUpdated", data => this.factoryUpdated(data));
+  }
+  handleFactoryToggle = (index) => {
+    var factories = [...this.state.factories];
+    factories[index].open = !factories[index].open;
+    this.setState({factories});
+  }
+  toggleAllFactories = (option) => {
+    var factories = [...this.state.factories].map(factory => {
+      factory.open = option;
+      return factory;
+    });
+    this.setState({factories});
   }
   factoryAdded = factory => {
       var factories = [...this.state.factories];
@@ -82,6 +99,9 @@ class App extends Component {
       editNumChildren: numChildren === 0 ? 0 : numChildren || '', 
       formErrors: {lowerBound: null, upperBound: null, numChildren: null}
     });
+  }
+  handleEditCancel = () => {
+    this.setState({selectedFactory: null});
   }
   handleInputChange = event => {
     const {value, name} = event.target;
@@ -125,15 +145,8 @@ class App extends Component {
       axios.put(`/api/update-factory/${this.state.selectedFactory._id}/${type}`, this.getFormValues(type));
     }
   }
-  handleCancel = () => {
-    this.setState({selectedFactory: null});
-  }
-  handleSortToggle = () => {
-    this.setState({sortToggle: !this.state.sortToggle})
-  }
   handleSortSelection = ({target: {value}}) => {
     this.setState({
-      sortToggle: false, 
       sortSelection: value, 
       factories: handleFactorySort(this.state.factories, value)
     });
@@ -156,14 +169,13 @@ class App extends Component {
     return (
         <div className={`main-container${this.state.selectedFactory ? ' editing' : ''}${this.state.showTreeActions ? ' show-tree-actions' : ''}`}>
           <TreeActions 
-            sortToggle={this.state.sortToggle}
             sortSelection={this.state.sortSelection}
-            handleSortToggle={this.handleSortToggle}
             handleSortSelection={this.handleSortSelection}
             filterInput={this.state.filterInput}
             handleFilterInput={this.handleFilterInput}
             handleFilterClear={this.handleFilterClear}
             closeTreeActions={this.closeTreeActions}
+            toggleAllFactories={this.toggleAllFactories}
           />
           <Tree 
             handleFactorySelection={this.handleFactorySelection} 
@@ -172,19 +184,20 @@ class App extends Component {
             dataLoadingError={this.state.dataLoadingError}
             filterInput={this.state.filterInput}
             openTreeActions={this.openTreeActions}
+            handleFactoryToggle={this.handleFactoryToggle}
           />
           <EditFactory 
               selectedFactory={this.state.selectedFactory}
-              handleSubmit = {this.handleSubmit}
+              handleSubmit={this.handleSubmit}
               handleInputChange={this.handleInputChange}
-              handleCancel={this.handleCancel}
+              handleEditCancel={this.handleEditCancel}
               editName={this.state.editName}
               editLowerBound={this.state.editLowerBound}
               editUpperBound={this.state.editUpperBound}
               editNumChildren={this.state.editNumChildren}
               formErrors={this.state.formErrors}
             />
-            <div className='edit-overlay' onClick={() => this.handleCancel()}></div>
+            <div className='edit-overlay' onClick={() => this.handleEditCancel()}></div>
             <div className='tree-actions-overlay' onClick={() => this.closeTreeActions()}></div>
         </div>
     );

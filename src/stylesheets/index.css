@@ -23,13 +23,13 @@ label{
   height: 100%;
 }
 .main-container .tree {
-  width: 68%;
+  width: 70%;
   transition: width .15s ease-in-out;
   z-index: 1;
 }
 .main-container .tree-actions {
   box-shadow: 1px 0 7px rgba(0,0,0,.5);
-  width: 32%;
+  width: 30%;
   transition: width .15s ease-in-out;
   z-index: 3;
   background: #f9f9f9;
@@ -298,6 +298,7 @@ select.form-input{
   color: #212529;
     background-color: #ffc107;
     border-color: #ffc107;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.2), 1px 2px 5px 0 rgba(0,0,0,.19);
 }
 .btn.btn-yellow:hover{
   color: #212529;
@@ -431,9 +432,24 @@ select.form-input{
   color: #777;
   padding: 10px 15px;
 }
-.delete-btn-container{
-  margin-top: 40px;
+.btn-container{
+  margin-top: 30px;
   text-align: center;
+}
+.toggle-btns button {
+  background-image: none;
+  background-color: #777;
+  border: 1px solid #666;
+  color: #fff;
+  padding: 2px 5px;
+  outline: none;
+  font-size: 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 5px 5px 5px 0;
+}
+.toggle-btns button:hover{
+  background-color: #666;
 }
 .selection-container{
   font-size: 12px;

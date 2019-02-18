@@ -6,12 +6,12 @@ import Icon from './Icon';
 
 class EditFactory extends Component{
     renderContent = () => {
-        const {selectedFactory, handleSubmit, handleInputChange, handleCancel, editName, editLowerBound, editUpperBound, editNumChildren, formErrors} = this.props;
+        const {selectedFactory, handleSubmit, handleInputChange, handleEditCancel, editName, editLowerBound, editUpperBound, editNumChildren, formErrors} = this.props;
         return(
             <div>
                 <div className='selection-container'>
                     <div><strong>Selected Factory:</strong> {selectedFactory.name}</div>
-                    <button className='btn cancel-selection' onClick={() => handleCancel()}>
+                    <button className='btn cancel-selection' onClick={() => handleEditCancel()}>
                         <Icon icon='times' style={{width: 14}} />
                     </button>
                 </div>
@@ -30,7 +30,7 @@ class EditFactory extends Component{
                     handleInputChange={handleInputChange}
                     formErrors={formErrors}
                 />
-                <div className='delete-btn-container'>
+                <div className='btn-container'>
                     <button className='btn btn-yellow' onClick={() => this.handleDelete(selectedFactory._id)}>
                         <Icon icon='trash' style={{width: 14, height: 16, verticalAlign: 'text-bottom', marginRight: 5}} /> 
                         <span>DELETE FACTORY</span>
