@@ -98,6 +98,9 @@ label{
     transition: left .15s ease-in-out;
     border-right: 1px solid #555;
   }
+  .show-tree-actions > .tree, .editing > .tree {
+    overflow: hidden;
+  }
   .main-container.show-tree-actions .tree-actions{
     left: 0;
   }
@@ -514,4 +517,27 @@ select.form-input{
 .checkbox.active{
   background-color: #4ba272;
   border-color: #46966a;
+}
+.flash-msg.success, .flash-msg.error{
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  padding: 15px 5px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #559c7b;
+  animation: slide-down;
+  animation-duration: 3s;
+}
+.flash-msg.error{
+  background-color: #c51f1f;
+}
+@keyframes slide-down{
+  0%{ top: -50px;}
+  10%{top: 0;}
+  90%{top: 0;}
+  100%{top: -50px;}
 }

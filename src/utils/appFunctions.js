@@ -62,9 +62,9 @@ export const handleEditCancel = function(){
 }
 export const handleInputChange = function(event){
     const {value, name} = event.target;
-    //If there is an error, check to see if the error status has changed whenever the user modifies a form input
+    //If there is an error with only the children props, check to see if the error status has changed whenever the user modifies a form input
     //Otherwise, just set the value
-    if(this.state.hasFormError){
+    if(name!=='name' && this.state.hasFormError){
         this.setState({[name]: value}, function(){
             this.setState({formErrors: checkForChildrenErrors(this.getFormValues())});
         })
@@ -82,6 +82,28 @@ export const getFormValues = function(type){
 }
 export const handleSubmit = function(type, event){
     event.preventDefault();
+    const createFlash = (className, message) => {
+        this.setState({
+            flashMsg: {className, message}
+        }, () => setTimeout(() => this.setState({flashMsg: null}), 3000));
+    }
+    const submitUpdate = type => {
+        axios.put(`/api/update-factory/${this.state.selectedFactory._id}/${type}`, this.getFormValues(type))
+        .then(({status}) => {
+            if(status === 200){
+                console.log('hi');
+                createFlash('flash-msg success', 'Update Successful!')
+            }
+            else{
+                throw Error('Bad request');
+            }
+        })
+        .catch( err => {
+            console.log(err);
+            createFlash('flash-msg error', 'An error occurred - try again later.');
+        });
+
+    }
     if(type==='children'){
         const values = this.getFormValues();
         const formErrors = checkForChildrenErrors(values);
@@ -95,11 +117,11 @@ export const handleSubmit = function(type, event){
             this.setState({formErrors, hasFormError: true});
         }
         else{
-        axios.put(`/api/update-factory/${this.state.selectedFactory._id}/${type}`, this.getFormValues(type));
+            submitUpdate(type);
         }
     }
     else{
-        axios.put(`/api/update-factory/${this.state.selectedFactory._id}/${type}`, this.getFormValues(type));
+        submitUpdate(type);
     }
 }
 export const handleSortSelection = function({target: {value}}){

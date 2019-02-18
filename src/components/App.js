@@ -43,7 +43,8 @@ class App extends Component {
         upperBound: null,
         numChildren: null
       },
-      showTreeActions: false
+      showTreeActions: false,
+      flashMsg: null
     }
 
     this.handleSortSelection = handleSortSelection.bind(this);
@@ -117,6 +118,7 @@ class App extends Component {
               editUpperBound={this.state.editUpperBound}
               editNumChildren={this.state.editNumChildren}
               formErrors={this.state.formErrors}
+              flashMsg={this.state.flashMsg}
             />
             <div className='edit-overlay' onClick={() => this.handleEditCancel()}></div>
             <div className='tree-actions-overlay' onClick={() => this.closeTreeActions()}></div>
