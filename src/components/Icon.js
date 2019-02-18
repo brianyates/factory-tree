@@ -36,6 +36,7 @@ const vectors = {
 };
 
 const Icon = ({icon, style}) =>{
+    //Heights should be specified in the style attribute for IE compatibility
     return(
         <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox={vectors[icon].viewBox} style={style}><path d={vectors[icon].path}></path></svg>
     )

@@ -215,6 +215,9 @@ label{
   fill: currentColor;
   cursor: pointer;
 }
+.input-btn > svg {
+  vertical-align: middle;
+}
 .input-btn.right{
   border-top-right-radius: .25rem;
   border-bottom-right-radius: .25rem;
@@ -420,6 +423,10 @@ select.form-input{
   padding: 1px;
   font-weight: 700;
 }
+.factory-children-container > ul > li > svg{
+  width: 5px;
+  height: 10px;
+}
 .factory-container.open .factory-children-container {
   display: block;
 }
@@ -481,6 +488,10 @@ select.form-input{
 }
 .edit-btn:hover, .edit-btn:focus{
   color: #305577;
+}
+.edit-btn > svg {
+  width: 20px;
+  height: 17.77px;
 }
 .checkbox{
   display: inline-block;

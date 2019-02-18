@@ -13,7 +13,7 @@ class EditFactory extends Component{
                 <div className='selection-container'>
                     <div><strong>Selected Factory:</strong> {selectedFactory.name}</div>
                     <button className='btn cancel-selection' onClick={() => handleEditCancel()}>
-                        <Icon icon='times' style={{width: 14}} />
+                        <Icon icon='times' style={{width: 14, height: 22.39}} />
                     </button>
                 </div>
                 <FormFactoryName 

@@ -22,7 +22,7 @@ class FormSortFilter extends Component{
                             onBlur={() => this.setState({focused: false})}
                         />
                         <button className={`input-btn right${this.state.focused ? ' search-focus': ''}`} onClick={() => handleFilterClear()}>
-                            {filterInput ? <Icon icon='times' style={{width: 14, margin: '0 1px'}}/> : <Icon icon='search' style={{width: 16}} />}
+                            {filterInput ? <Icon icon='times' style={{width: 14, margin: '0 1px'}}/> : <Icon icon='search' style={{width: 16, height: 16}} />}
                         </button>
                     </div>
                     <div className='form-group'>

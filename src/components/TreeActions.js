@@ -8,7 +8,7 @@ const TreeActions = ({sortSelection, handleSortSelection, filterInput, handleFil
             <div className='column-container'>
                 <header className='h-1'>
                     <button type='button' className='close-tree-actions-btn' title='Close Tree Actions' onClick={() => closeTreeActions() }>
-                        <Icon icon='times' style={{width: 16}} />
+                        <Icon icon='times' style={{width: 16, height: 25.59}} />
                     </button>
                     <span>TREE ACTIONS</span>
                 </header>

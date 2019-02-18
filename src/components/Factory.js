@@ -14,7 +14,7 @@ const Factory = ({factory, selected, index, handleFactorySelection, handleFactor
                     </div>
                     <ul>
                         {children.map((child, i)=> {
-                            return <li key={`${_id}-child-${i}`}><Icon icon='angle' style={{width: 5}} /> {child}</li>
+                            return <li key={`${_id}-child-${i}`}><Icon icon='angle' /> {child}</li>
                         })}
                     </ul>
                 </Fragment>
@@ -31,8 +31,8 @@ const Factory = ({factory, selected, index, handleFactorySelection, handleFactor
                     <span className='angle'><Icon icon='angle' /></span>
                     <span className='factory-name'>{name}</span>
                 </div>
-                <button onClick={() => handleFactorySelection(factory)} className='edit-btn'>
-                    <Icon icon='pencil' style={{width: 20}} />
+                <button onClick={() => handleFactorySelection(factory)} className='edit-btn' title='Edit this factory'>
+                    <Icon icon='pencil' />
                 </button>
             </div>
             <div className='factory-children-container'>{renderChildrenContent()}</div>
