@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Muli', sans-serif;
 }
 html, body, #root{
   height: 100%;
@@ -486,6 +486,7 @@ select.form-input{
   display: inline-block;
   width: 20px;
   height: 20px;
+  line-height: 16px;
   border: 2px solid #777;
   border-radius: 4px;
   text-align: center;
@@ -493,6 +494,7 @@ select.form-input{
   cursor: pointer;
   color: #fff;
   background-color: rgba(0,0,0,0);
+  vertical-align: middle;
   fill: currentColor;
 }
 .checkbox:hover{

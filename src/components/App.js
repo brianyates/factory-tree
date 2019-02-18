@@ -5,26 +5,62 @@ import {HOST_URI} from '../config/keys';
 import TreeActions from './TreeActions';
 import Tree from './Tree';
 import EditFactory from './EditFactory';
-import {checkForChildrenErrors, handleFactorySort} from '../utils';
+import {
+  handleSortSelection,
+  handleFilterInput,
+  handleFilterClear,
+  closeTreeActions,
+  toggleAllFactories,
+  handleFactorySelection,
+  openTreeActions,
+  handleFactoryToggle,
+  handleSubmit,
+  handleInputChange,
+  handleEditCancel,
+  getFormValues,
+  factoryAdded,
+  factoryUpdated,
+  factoryRemoved
+} from '../utils/appFunctions';
 
 class App extends Component {
-  state = {
-    factories: null,
-    selectedFactory: null,
-    sortSelection: 'timeDown',
-    filterInput: '',
-    editName: '',
-    editLowerBound: '',
-    editUpperBound: '',
-    editNumChildren: '',
-    dataLoadingError: false,
-    hasFormError: false,
-    formErrors: {
-      lowerBound: null,
-      upperBound: null,
-      numChildren: null
-    },
-    showTreeActions: false
+  constructor(props){
+    super(props);
+
+    this.state = {
+      factories: null,
+      selectedFactory: null,
+      sortSelection: 'timeDown',
+      filterInput: '',
+      editName: '',
+      editLowerBound: '',
+      editUpperBound: '',
+      editNumChildren: '',
+      dataLoadingError: false,
+      hasFormError: false,
+      formErrors: {
+        lowerBound: null,
+        upperBound: null,
+        numChildren: null
+      },
+      showTreeActions: false
+    }
+
+    this.handleSortSelection = handleSortSelection.bind(this);
+    this.handleFilterInput = handleFilterInput.bind(this);
+    this.handleFilterClear = handleFilterClear.bind(this);
+    this.closeTreeActions = closeTreeActions.bind(this);
+    this.toggleAllFactories = toggleAllFactories.bind(this);
+    this.handleFactorySelection = handleFactorySelection.bind(this);
+    this.openTreeActions = openTreeActions.bind(this);
+    this.handleFactoryToggle= handleFactoryToggle.bind(this);
+    this.handleSubmit = handleSubmit.bind(this);
+    this.handleInputChange = handleInputChange.bind(this);
+    this.handleEditCancel = handleEditCancel.bind(this);
+    this.getFormValues = getFormValues.bind(this);
+    this.factoryAdded = factoryAdded.bind(this);
+    this.factoryUpdated = factoryUpdated.bind(this);
+    this.factoryRemoved = factoryRemoved.bind(this);
   }
   componentDidMount(){
     axios.get('/api/all-factories')
@@ -49,121 +85,6 @@ class App extends Component {
     socket.on("factoryAdded", data => this.factoryAdded(data));
     socket.on("factoryRemoved", data => this.factoryRemoved(data));
     socket.on("factoryUpdated", data => this.factoryUpdated(data));
-  }
-  handleFactoryToggle = (index) => {
-    var factories = [...this.state.factories];
-    factories[index].open = !factories[index].open;
-    this.setState({factories});
-  }
-  toggleAllFactories = (option) => {
-    var factories = [...this.state.factories].map(factory => {
-      factory.open = option;
-      return factory;
-    });
-    this.setState({factories});
-  }
-  factoryAdded = factory => {
-      var factories = [...this.state.factories];
-      factories.push(factory);
-      this.setState({factories: handleFactorySort(factories, this.state.sortSelection), showTreeActions: false});
-  }
-  factoryRemoved = id => {
-      var factories = [...this.state.factories].filter( factory => factory._id !== id);
-      this.setState({factories, selectedFactory: null})
-  }
-  factoryUpdated = updatedFactory => {
-    const {name, lowerBound, upperBound, numChildren, _id} = updatedFactory;
-    const factories = [...this.state.factories].map( factory => {
-      if(factory._id === _id){
-        return updatedFactory;
-      }
-      return factory;
-    });
-    this.setState({
-      factories: handleFactorySort(factories, this.state.sortSelection), 
-      selectedFactory: updatedFactory, 
-      name, 
-      lowerBound, 
-      upperBound, 
-      numChildren
-    });
-  }
-  handleFactorySelection = selectedFactory => {
-    const {name, lowerBound, upperBound, numChildren} = selectedFactory;
-    this.setState({
-      selectedFactory, 
-      editName: name, 
-      //Since 0 is a 'falsey' value, first check if it's 0 and then set to an empty string if it's not a legit value
-      editLowerBound: lowerBound === 0 ? 0 : lowerBound || '', 
-      editUpperBound: upperBound === 0 ? 0 : upperBound || '',  
-      editNumChildren: numChildren === 0 ? 0 : numChildren || '', 
-      formErrors: {lowerBound: null, upperBound: null, numChildren: null}
-    });
-  }
-  handleEditCancel = () => {
-    this.setState({selectedFactory: null});
-  }
-  handleInputChange = event => {
-    const {value, name} = event.target;
-    //If there is an error, check to see if the error status has changed whenever the user modifies a form input
-    //Otherwise, just set the value
-    if(this.state.hasFormError){
-        this.setState({[name]: value}, () => {
-            this.setState({formErrors: checkForChildrenErrors(this.getFormValues())});
-        })
-    }
-    else{
-        this.setState({[name]: value});
-    }
-  }
-  getFormValues = type => {
-    if(type==='name'){
-      return {name: this.state.editName};
-    }
-    const {editLowerBound, editUpperBound, editNumChildren} = this.state;
-    return {lowerBound: editLowerBound, upperBound: editUpperBound, numChildren: editNumChildren};
-  }
-  handleSubmit = (type, event) => {
-    event.preventDefault();
-    if(type==='children'){
-      const values = this.getFormValues();
-      const formErrors = checkForChildrenErrors(values);
-      var hasFormError = false;
-      Object.keys(formErrors).forEach(val => {
-          if(formErrors[val]){
-              hasFormError = true;
-          }
-      })
-      if(hasFormError){
-          this.setState({formErrors, hasFormError: true});
-      }
-      else{
-        axios.put(`/api/update-factory/${this.state.selectedFactory._id}/${type}`, this.getFormValues(type));
-      }
-    }
-    else{
-      axios.put(`/api/update-factory/${this.state.selectedFactory._id}/${type}`, this.getFormValues(type));
-    }
-  }
-  handleSortSelection = ({target: {value}}) => {
-    this.setState({
-      sortSelection: value, 
-      factories: handleFactorySort(this.state.factories, value)
-    });
-  }
-  handleFilterInput = (event) => {
-    this.setState({
-      filterInput: event.target.value
-    });
-  }
-  handleFilterClear = () => {
-    this.setState({filterInput: ''});
-  }
-  closeTreeActions = () => {
-    this.setState({showTreeActions: false})
-  }
-  openTreeActions = () => {
-    this.setState({showTreeActions: true})
   }
   render() {
     return (

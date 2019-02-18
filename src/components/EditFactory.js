@@ -6,7 +6,8 @@ import Icon from './Icon';
 
 class EditFactory extends Component{
     renderContent = () => {
-        const {selectedFactory, handleSubmit, handleInputChange, handleEditCancel, editName, editLowerBound, editUpperBound, editNumChildren, formErrors} = this.props;
+        const {selectedFactory, handleSubmit, handleInputChange, handleEditCancel, editName, 
+            editLowerBound, editUpperBound, editNumChildren, formErrors} = this.props;
         return(
             <div>
                 <div className='selection-container'>
