@@ -1,93 +1,44 @@
 import React, {Component, Fragment} from 'react';
-import axios from 'axios';
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
 import FormSortFilter from './FormSortFilter';
 import Icon from './Icon';
-import {checkForErrors} from '../utils';
+import {handleCheckBoxClick, handleInputChange, handleSubmit, getFormValues, resetFormValues} from '../utils/treeActionFunctions';
+import {createFlash} from '../utils/appFunctions';
 
 class FormTreeActions extends Component{
-    state = {
-        name: '',
-        lowerBound: '',
-        upperBound: '',
-        numChildren: '',
-        generateChildren: false,
-        submitting: false,
-        hasFormError: false,
-        formErrors: {
-            name: null,
-            lowerBound: null,
-            upperBound: null,
-            numChildren: null
-        }
-    }
-    handleCheckBoxClick = () => {
-        this.setState({generateChildren: !this.state.generateChildren})
-    }
-    handleInputChange = event => {
-        const {value, name} = event.target;
-        //If there is an error, check to see if the error status has changed whenever the user modifies a form input
-        //Otherwise, just set the value
-        if(this.state.hasFormError){
-            this.setState({[name]: value}, () => {
-                this.setState({formErrors: checkForErrors(this.getFormValues())});
-            })
-        }
-        else{
-            this.setState({[name]: value});
-        }
-    }
-    getFormValues = () => {
-        const {name, generateChildren, lowerBound, upperBound, numChildren} = this.state;
-        return {name, generateChildren, lowerBound, upperBound, numChildren};
-    }
-    resetFormValues = () => {
-        this.setState({
-            name: '', 
-            lowerBound: '', 
-            upperBound: '', 
-            numChildren: '', 
-            generateChildren: false, 
-            submitting: false, 
-            hasFormError: false
-        });
-    }
-    handleSubmit = event => {
-        event.preventDefault();
-        this.setState({submitting: true});
-        const values = this.getFormValues();
-        const formErrors = checkForErrors(values);
-        var hasFormError = false;
-        Object.keys(formErrors).forEach(val => {
-            if(formErrors[val]){
-                hasFormError = true;
-            }
-        })
-        if(hasFormError){
-            this.setState({formErrors, submitting: false, hasFormError: true});
-        }
-        else{
-            this.setState({formErrors});
-            axios.post('/api/create-factory', values)
-            .then( ({status}) => {
-                if(status===201){
-                    this.resetFormValues();
-                }
-                else{
-                    throw Error('Bad request');
-                }
-            })
-            .catch( err => {
-                console.log(err);
-                this.resetFormValues();
-            })
-        }
+    constructor(props){
+        super(props);
+
+        this.state = {
+            name: '',
+            lowerBound: '',
+            upperBound: '',
+            numChildren: '',
+            generateChildren: false,
+            submitting: false,
+            hasFormError: false,
+            formErrors: {
+                name: null,
+                lowerBound: null,
+                upperBound: null,
+                numChildren: null
+            },
+            flashMsg: null
+        };
+
+        this.handleCheckBoxClick = handleCheckBoxClick.bind(this);
+        this.handleInputChange = handleInputChange.bind(this);
+        this.handleSubmit = handleSubmit.bind(this);
+        this.getFormValues = getFormValues.bind(this);
+        this.resetFormValues = resetFormValues.bind(this);
+        this.createFlash = createFlash.bind(this);
     }
     render(){
         const {sortSelection, handleSortSelection, filterInput, handleFilterInput, handleFilterClear, toggleAllFactories} = this.props;
         return(
             <Fragment>
+                {this.state.flashMsg && <div className={this.state.flashMsg.className}>{this.state.flashMsg.message}</div>}
                 <h5>CREATE A NEW FACTORY</h5>
                 <section>               
                     <form onSubmit={this.handleSubmit}>

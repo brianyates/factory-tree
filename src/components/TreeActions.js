@@ -2,7 +2,7 @@ import React from 'react';
 import FormTreeActions from './FormTreeActions';
 import Icon from './Icon';
 
-const TreeActions = ({sortSelection, handleSortSelection, filterInput, handleFilterInput, handleFilterClear, closeTreeActions, toggleAllFactories}) =>{
+const TreeActions = ({sortSelection, handleSortSelection, filterInput, handleFilterInput, handleFilterClear, closeTreeActions, toggleAllFactories, flashMsg}) =>{
     return(
         <div className='main-col tree-actions'>
             <div className='column-container'>

@@ -20,7 +20,8 @@ import {
   getFormValues,
   factoryAdded,
   factoryUpdated,
-  factoryRemoved
+  factoryRemoved,
+  createFlash
 } from '../utils/appFunctions';
 
 class App extends Component {
@@ -62,6 +63,7 @@ class App extends Component {
     this.factoryAdded = factoryAdded.bind(this);
     this.factoryUpdated = factoryUpdated.bind(this);
     this.factoryRemoved = factoryRemoved.bind(this);
+    this.createFlash = createFlash.bind(this);
   }
   componentDidMount(){
     axios.get('/api/all-factories')
@@ -81,7 +83,7 @@ class App extends Component {
     })
     .catch( () => {
         this.setState({dataLoadingError: true})
-    })
+    });
     const socket = socketIOClient(HOST_URI);
     socket.on("factoryAdded", data => this.factoryAdded(data));
     socket.on("factoryRemoved", data => this.factoryRemoved(data));

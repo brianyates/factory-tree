@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {checkForChildrenErrors, handleFactorySort} from './index';
+import {handleFactorySort} from './factorySortingFunctions';
+import {checkForChildrenErrors} from './formValidationFunctions';
 
 export const handleFactoryToggle = function(index){
     var factories = [...this.state.factories];
@@ -80,19 +81,20 @@ export const getFormValues = function(type){
     const {editLowerBound, editUpperBound, editNumChildren} = this.state;
     return {lowerBound: editLowerBound, upperBound: editUpperBound, numChildren: editNumChildren};
 }
+export const createFlash = function(className, message){
+    this.setState({flashMsg: {className, message}}, function(){
+        setTimeout(() =>{
+            this.setState({flashMsg: null});
+        }, 3000);
+    });
+}
 export const handleSubmit = function(type, event){
     event.preventDefault();
-    const createFlash = (className, message) => {
-        this.setState({
-            flashMsg: {className, message}
-        }, () => setTimeout(() => this.setState({flashMsg: null}), 3000));
-    }
     const submitUpdate = type => {
         axios.put(`/api/update-factory/${this.state.selectedFactory._id}/${type}`, this.getFormValues(type))
         .then(({status}) => {
             if(status === 200){
-                console.log('hi');
-                createFlash('flash-msg success', 'Update Successful!')
+                this.createFlash('flash-msg success', 'Update Successful!')
             }
             else{
                 throw Error('Bad request');
@@ -100,9 +102,8 @@ export const handleSubmit = function(type, event){
         })
         .catch( err => {
             console.log(err);
-            createFlash('flash-msg error', 'An error occurred - try again later.');
+            this.createFlash('flash-msg error', 'An error occurred - try again later.');
         });
-
     }
     if(type==='children'){
         const values = this.getFormValues();
@@ -117,6 +118,7 @@ export const handleSubmit = function(type, event){
             this.setState({formErrors, hasFormError: true});
         }
         else{
+            this.setState({formErrors: {lowerBound: null, upperBound: null, numChildren: null}, hasFormError: false});
             submitUpdate(type);
         }
     }
