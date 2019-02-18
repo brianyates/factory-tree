@@ -31,9 +31,14 @@ export const factoryUpdated = function(updatedFactory){
         }
         return factory;
     });
+    //Only update selected factory if a user is currently editing that factory
+    var selectedFactory = this.state.selectedFactory;
+    if(selectedFactory && selectedFactory._id === _id){
+        selectedFactory = updatedFactory;
+    }
     this.setState({
         factories: handleFactorySort(factories, this.state.sortSelection), 
-        selectedFactory: updatedFactory, 
+        selectedFactory, 
         name, 
         lowerBound, 
         upperBound, 
