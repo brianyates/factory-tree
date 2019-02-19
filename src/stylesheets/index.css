@@ -340,7 +340,7 @@ select.form-input{
   justify-content: space-between;
 }
 .factory-container.selected > .factory-header {
-  background: #e8fdf1;
+  background: #eff9f3;
 }
 .factory-container > .factory-header:hover, .root:hover{
   background: #f7f7f7;
@@ -379,7 +379,7 @@ select.form-input{
   box-shadow: 1px 2px 3px rgba(0, 0, 0, .05);
 }
 .factory-container.selected .factory-children-container {
-  background: #ecfcf1;
+  background: #eff9f3;
 }
 .factory-children-container .children-info {
   font-size: 12px; 

@@ -32,7 +32,7 @@ class TreeRoot extends Component{
     renderFactories = () =>{
         var {selectedFactory, factories, filterInput} = this.props;
         if(filterInput){
-            const re = new RegExp(filterInput, "gi");
+            const re = new RegExp(filterInput, "i");
             factories = factories.filter(factory => re.test(factory.name));
         }
         return(

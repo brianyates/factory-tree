@@ -1,14 +1,9 @@
 const mongoose = require('mongoose');
+const sanitize = require('mongo-sanitize'); //Use Mongo Sanitize to protect against injection attacks
 const Factory = mongoose.model('factories');
+const {formInputsAreValid, generateChildArray} = require('./routeHelpers');
 
-const generateChildArray = (lowerBound, upperBound, numChildren) => {
-    var arr = [];
-    for(let i = 0; i < numChildren; i++){
-        const randomValue = Math.floor(Math.random() * (upperBound - lowerBound + 1) ) + lowerBound;
-        arr.push(randomValue);
-    }
-    return arr;
-}
+const INVALID_FORM_ERROR = Error('Invalid form inputs');
 
 module.exports = (app, io) => {
 
@@ -24,10 +19,13 @@ module.exports = (app, io) => {
             var {name, generateChildren, lowerBound, upperBound, numChildren} = req.body;
             var children;
             //If the user generates the children upon factory creation, populate children...otherwise, leave child attributes blank
+            if(!name){
+                throw INVALID_FORM_ERROR;
+            }
             if(generateChildren){
-                lowerBound = parseInt(lowerBound);
-                upperBound = parseInt(upperBound);
-                numChildren = parseInt(numChildren);
+                if(!formInputsAreValid(lowerBound, upperBound, numChildren)){
+                    throw INVALID_FORM_ERROR;
+                }
                 children = generateChildArray(lowerBound, upperBound, numChildren);
             }
             else{
@@ -37,7 +35,7 @@ module.exports = (app, io) => {
                 children = null;
             }
             const factory = new Factory({
-                name,
+                name: sanitize(name),
                 lowerBound,
                 upperBound,
                 numChildren,
@@ -61,7 +59,10 @@ module.exports = (app, io) => {
         if(type==='name'){
             try{
                 const {name} = req.body;
-                const factory = await Factory.findOneAndUpdate({_id: id}, {$set:{name}}, {new: true});
+                if(!name){
+                    throw INVALID_FORM_ERROR;
+                }
+                const factory = await Factory.findOneAndUpdate({_id: id}, {$set:{name: sanitize(name)}}, {new: true});
                 if(factory){
                     io.emit('factoryUpdated', factory);
                     res.sendStatus(200);
@@ -78,9 +79,9 @@ module.exports = (app, io) => {
         else{
             try{
                 var {lowerBound, upperBound, numChildren} = req.body;
-                lowerBound = parseInt(lowerBound);
-                upperBound = parseInt(upperBound);
-                numChildren = parseInt(numChildren);
+                if(!formInputsAreValid(lowerBound, upperBound, numChildren)){
+                    throw INVALID_FORM_ERROR;
+                }
                 const children = generateChildArray(lowerBound, upperBound, numChildren);
                 const factory = await Factory.findOneAndUpdate({_id: id}, {$set:{lowerBound, upperBound, numChildren, children}}, {new: true});
                 if(factory){

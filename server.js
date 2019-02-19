@@ -4,6 +4,7 @@ const {MONGO_URI} = require('./src/config/keys');
 const mongoose = require('mongoose');
 require('./models/Factory');
 mongoose.connect(MONGO_URI, { useNewUrlParser: true });
+
 const app = express();
 app.use(bodyParser.json());
 const server = require('http').Server(app);
