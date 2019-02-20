@@ -23,3 +23,8 @@ const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
 });
+
+//Export the server for testing purposes
+if (process.env.NODE_ENV !== 'production') {
+  module.exports = app;
+}
