@@ -16,6 +16,7 @@ export const toggleAllFactories = function(option){
 }
 export const factoryAdded = function(factory){
     var factories = [...this.state.factories];
+    factory.open = true;
     factories.push(factory);
     this.setState({factories: handleFactorySort(factories, this.state.sortSelection), showTreeActions: false});
 }

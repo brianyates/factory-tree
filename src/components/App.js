@@ -71,7 +71,7 @@ class App extends Component {
         if(status === 200){
             this.setState({
               factories: data.map(factory => {
-                //Set all factories to be expanded (not collapsed in the tree view)
+                //Set all factories to be expanded in the tree view with the 'open' property
                 factory.open = true;
                 return factory;
               })
