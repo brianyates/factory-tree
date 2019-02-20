@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const sanitize = require('mongo-sanitize'); //Use Mongo Sanitize to protect against injection attacks
+const sanitize = require('mongo-sanitize'); //Use Mongo Sanitize to protect against injection
 const Factory = mongoose.model('factories');
 const {formInputsAreValid, generateChildArray} = require('./routeHelpers');
 

@@ -24,7 +24,7 @@ server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
 });
 
-//Export the server for testing purposes
+//Export the server for testing purposes only
 if (process.env.NODE_ENV !== 'production') {
   module.exports = app;
 }
