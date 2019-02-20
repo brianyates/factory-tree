@@ -1,3 +1,5 @@
+//Thank you for your time and consideration, Passport!
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const {MONGO_URI} = require('./src/config/keys');
