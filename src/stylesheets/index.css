@@ -366,6 +366,7 @@ select.form-input{
 .header-info > .angle > svg {
   vertical-align: text-bottom;
   width: 12px;
+  height: 24px;
 }
 .header-info > .factory-name {
   max-width: calc(100% - 40px);
