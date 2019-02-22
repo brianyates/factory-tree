@@ -18,19 +18,23 @@ const timeUp = (a,b) => {
     return 0;
 }
 const alphaDown = (a,b) => {
-    if (a.name < b.name){
+    const aName = a.name.toLowerCase();
+    const bName = b.name.toLowerCase();
+    if (aName < bName){
         return -1;
     }
-    else if (a.name > b.name){
+    else if (aName > bName){
         return 1;
     }
     return 0;
 }
 const alphaUp = (a,b) => {
-    if (a.name > b.name){
+    const aName = a.name.toLowerCase();
+    const bName = b.name.toLowerCase();
+    if (aName > bName){
         return -1;
     }
-    else if (a.name < b.name){
+    else if (aName < bName){
         return 1;
     }
     return 0;
