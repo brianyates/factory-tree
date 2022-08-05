@@ -9,7 +9,7 @@
     "core-js": "^2.6.5",
     "express": "^4.16.4",
     "mongo-sanitize": "^1.0.1",
-    "mongoose": "^5.4.11",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.18.10",
     "react": "^16.8.1",
     "react-app-polyfill": "^0.2.1",
